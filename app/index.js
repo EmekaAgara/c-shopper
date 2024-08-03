@@ -12,14 +12,16 @@ import { Link, Slot, useNavigation, useRouter } from "expo-router";
 import SlidingText from "../components/SlidingText";
 const { height: deviceHeight } = Dimensions.get("window");
 import { StatusBar } from "expo-status-bar";
+import { useWeb3Modal } from "@web3modal/wagmi-react-native";
 
 export default function App() {
   <StatusBar hidden={true} />;
+  const { open } = useWeb3Modal();
   const router = useRouter();
 
   const onConnectPressed = () => {
     router.push({ pathname: "screens/home" });
-    // router.push({ pathname: "chat" });
+    open();
   };
   return (
     <View style={styles.container}>

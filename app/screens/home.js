@@ -1,30 +1,49 @@
+import React from "react";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+// import { StatusBar } from 'expo-status-bar';
+import Icon from "react-native-vector-icons/Ionicons";
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  View,
+  TextInput,
+  SafeAreaView,
+  Image,
+} from "react-native";
+import { W3mButton } from "@web3modal/wagmi-react-native";
 
-const data = [
+const options = [
   {
-    id: "1",
-    image: require("../../assets/logo.png"),
-    title: "Meta Lama 7B",
-    description: "Using Google Gemini Test chat functiionality",
-    screen: "aichat",
+    image: require("../../assets/image.jpeg"),
+    title: "Sport",
+    subtitle: "Amateur leagues, fan groups",
+    screen: "screens/products",
   },
-
   {
-    id: "2",
-    image: require("../../assets/logo.png"),
-    title: "Meta Lama",
-    description: "Using Meta Lama Test chat functiionality",
-    screen: "chat",
+    image: require("../../assets/image.jpeg"),
+    title: "Youth organisation",
+    subtitle: "Scouts, clubs, outreach programmes",
+    screen: "screens/products",
   },
-
   {
-    id: "3",
-    image: require("../../assets/logo.png"),
-    title: "Google Gemini Test",
-    description: "Using Google Gemini Test chat functiionality",
-    screen: "googleai",
+    image: require("../../assets/image.jpeg"),
+    title: "Project",
+    subtitle: "Planning, brainstorming, hobbies",
+    screen: "screens/products",
+  },
+  {
+    image: require("../../assets/image.jpeg"),
+    title: "Business",
+    subtitle: "Customer engagement, networking",
+    screen: "screens/products",
+  },
+  {
+    image: require("../../assets/image.jpeg"),
+    title: "Volunteering",
+    subtitle: "Non-profits, mentoring, fundraising",
+    screen: "screens/products",
   },
 ];
 
@@ -42,133 +61,166 @@ export default function home() {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="hidden" />
-      <View style={styles.container} behavior="padding">
-        <Text style={styles.HelloText}>Enter your Location</Text>
-
-        <TouchableOpacity
-          onPress={onThethaChatPressed}
-          style={styles.ButtonContainer}
-        >
-          <Text style={styles.ButtonText}> Recommended Products</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={onGeminiPressed}
-          style={styles.ButtonContainer}
-        >
-          <Text style={styles.ButtonText}> Get new Operational Account</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={onGoogleGemPressed}
-          style={styles.ButtonContainer}
-        >
-          <Text style={styles.ButtonText}>Standby Account send xrp</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.profile}>
+          <View style={styles.profileIcon}>
+            <Text style={styles.profileInitials}>EA</Text>
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationText}>2</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.searchContainer}>
+          <W3mButton balance="show" size="md" />
+        </View>
+        <TouchableOpacity style={styles.groupIcon}>
+          <Icon name="people-circle" size={30} color="#fff" />
         </TouchableOpacity>
       </View>
-    </View>
+      <View style={styles.content}>
+        <Text style={styles.title}>
+          Get everyone together by creating a community
+        </Text>
+        <View style={styles.createButton}>
+          <Icon name="search" size={24} color="#888" />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            placeholderTextColor="#888"
+          />
+          {/* <Text style={styles.createButtonText}>Create my own</Text> */}
+        </View>
+        <View style={styles.optionsContainer}>
+          {options.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.option}
+              onPress={() => router.push({ pathname: option.screen })}
+            >
+              <Image source={option.image} style={styles.optionImage} />
+              <View style={styles.optionTextContainer}>
+                <Text style={styles.optionTitle}>{option.title}</Text>
+                <Text style={styles.optionSubtitle}>{option.subtitle}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
+  },
+  header: {
+    flexDirection: "row",
     alignItems: "center",
+    padding: 16,
+  },
+  profile: {
+    flex: 1,
+  },
+  profileIcon: {
+    position: "relative",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#444",
     justifyContent: "center",
+    alignItems: "center",
   },
-  HelloText: {
-    color: "white",
-    fontSize: 25,
-    fontWeight: 700,
-    textAlign: "left",
-    paddingHorizontal: 20,
-  },
-
-  mainText: {
-    color: "white",
-    fontSize: 30,
-    fontWeight: 700,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    paddingBottom: 10,
-  },
-
-  wText: {
-    color: "white",
-    fontSize: 90,
-    fontWeight: 600,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    marginVertical: 15,
-  },
-
-  dText: {
-    color: "white",
-    fontSize: 15,
-    fontWeight: 600,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    color: "#818589",
-    lineHeight: 20,
-  },
-
-  sText: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: 600,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    color: "#ffffff",
-    lineHeight: 20,
-    paddingTop: 10,
-  },
-
-  subText: {
-    color: "white",
-    fontSize: 15,
-    fontWeight: 500,
-    textAlign: "center",
-    paddingHorizontal: 50,
-    color: "#818589",
-    lineHeight: 20,
-  },
-
-  weatherImg: {
-    width: "70%",
-    maxWidth: 300,
-    maxHeight: 250,
-    alignContent: "center",
-    alignSelf: "center",
-    marginVertical: 30,
-  },
-
-  textInput: {
-    backgroundColor: "#212125",
-    height: 55,
-    width: "90%",
-    marginTop: 20,
-    marginHorizontal: 20,
-    paddingHorizontal: 25,
-    alignSelf: "flex-start",
-    borderRadius: 7,
-    color: "#818589",
-  },
-
-  ButtonContainer: {
-    backgroundColor: "#5659C6",
-    borderRadius: 5,
-    paddingVertical: 20,
-    paddingHorizontal: 140,
-    marginBottom: 10,
-  },
-
-  ButtonText: {
-    fontSize: 15,
+  profileInitials: {
     color: "#fff",
-    fontWeight: 500,
-    alignSelf: "center",
+    fontWeight: "bold",
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  notificationText: {
+    color: "#fff",
+    fontSize: 12,
+  },
+  searchContainer: {
+    flex: 4,
+    marginLeft: 16,
+  },
+  searchInput: {
+    // backgroundColor: "#333",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    color: "#fff",
+    width: "95%",
+    padding: 15,
+  },
+  groupIcon: {
+    marginLeft: 16,
+  },
+  content: {
+    padding: 16,
+  },
+  title: {
+    color: "#fff",
+    fontSize: 20,
+    marginBottom: 16,
+  },
+  createButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#222",
+    borderRadius: 8,
+    padding: 6,
+    marginBottom: 16,
+    paddingLeft: 20,
+    shadowColor: "#cf6679",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  createButtonText: {
+    color: "#888",
+    marginLeft: 8,
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  option: {
+    width: "48%",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#222",
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  optionImage: {
+    width: 50,
+    height: 50,
+    marginBottom: 8,
+  },
+  optionTextContainer: {
+    alignItems: "center",
+  },
+  optionTitle: {
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  optionSubtitle: {
+    color: "#888",
+    textAlign: "center",
   },
 });
